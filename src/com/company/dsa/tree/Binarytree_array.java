@@ -30,7 +30,39 @@ public class Binarytree_array {
             }
         }
     }
+    public void preOrder(int index){
+        if(index>lastUserIndex){
+            return;
+        }
+        System.out.print(array[index] + "->");
+        preOrder(index * 2);
+        preOrder(index  * 2 + 1);
+    }
+    public void inOrder(int index){
+        if(index>lastUserIndex){
+            return;
+        }
+        inOrder(index*2);
+        System.out.print(array[index] + "->");
+        inOrder(index * 2 + 1);
 
+    }
+    public void postOrder(int index){
+        if(index>lastUserIndex){
+            return;
+        }
+        postOrder(index*2);
+        postOrder(index*2 + 1);
+        System.out.print(array[index] + "->");
+    }
+    public void levelOrder(int index){
+        if(index>lastUserIndex){
+            return;
+        }
+        for(int i=0;i<=lastUserIndex;i++){
+            System.out.print(array[i] + "->");
+        }
+    }
     public static void main(String[] args) {
         Binarytree_array binarytree = new Binarytree_array();
         binarytree.createBinaryTree(10);
@@ -41,5 +73,14 @@ public class Binarytree_array {
         binarytree.insertNode("5");
         binarytree.insertNode("6");
         binarytree.insertNode("7");
+        binarytree.insertNode("8");
+        binarytree.insertNode("9");
+        binarytree.preOrder(1);
+        System.out.println();
+        binarytree.inOrder(1);
+        System.out.println();
+        binarytree.postOrder(1);
+        System.out.println();
+        binarytree.levelOrder(1);
     }
 }
