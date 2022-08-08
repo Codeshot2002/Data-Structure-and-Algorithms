@@ -44,7 +44,7 @@ class DirectChaining{
 }
 public class direct_chaining {
     public static void main(String[] args) {
-        DirectChaining directChaining = new DirectChaining(10);
+        DirectChaining directChaining = new DirectChaining(1);
         directChaining.insertHashTable("Umang");
         directChaining.insertHashTable("Ipsit");
         directChaining.insertHashTable("Rashmi");
