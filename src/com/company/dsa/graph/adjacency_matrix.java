@@ -2,6 +2,8 @@ package com.company.dsa.graph;
 
 import java.awt.desktop.AboutHandler;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 class GraphNode{
     public String name;
@@ -53,6 +55,30 @@ class Graph{
         }
         return neighbors;
     }
+    public void bfsVisit(GraphNode node){
+        LinkedList<GraphNode> queue = new LinkedList<>();
+        queue.add(node);
+        while(!queue.isEmpty()){
+            GraphNode current = queue.remove(0);
+            current.isVisited = true;
+            System.out.print(current.name + " ");
+            ArrayList<GraphNode> neighbor = getNeighbors(current);
+            for(GraphNode neigbors : neighbor){
+                if(!neigbors.isVisited){
+                    queue.add(neigbors);
+                    neigbors.isVisited = true;
+                }
+            }
+        }
+    }
+
+    public void bfs(){
+        for(GraphNode node:nodelist){
+            if(!node.isVisited){
+                bfsVisit(node);
+            }
+        }
+    }
 }
 public class adjacency_matrix {
     public static void main(String[] args) {
@@ -71,6 +97,6 @@ public class adjacency_matrix {
         adjacencyGraph.addUndirectedEdge(2, 1);
         adjacencyGraph.addUndirectedEdge(3, 0);
 
-        System.out.println(adjacencyGraph.toString());
+        adjacencyGraph.bfs();
     }
 }

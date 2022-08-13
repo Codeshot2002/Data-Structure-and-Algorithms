@@ -1,10 +1,12 @@
 package com.company.dsa.graph;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 class GraphNode2{
     public String name;
     int index;
+    public boolean isVisited = false;
 
     ArrayList<GraphNode2> neighbor = new ArrayList<>();
     public GraphNode2(String name, int index){
@@ -43,6 +45,28 @@ class Graph2{
         }
         return s.toString();
     }
+    public void bfsVisit(GraphNode2 node){
+        LinkedList<GraphNode2> queue = new LinkedList<>();
+        queue.add(node);
+        while(!queue.isEmpty()){
+            GraphNode2 current = queue.remove(0);
+            current.isVisited = true;
+            System.out.print(current.name + " ");
+            for(GraphNode2 neigbor : current.neighbor){
+                if(!neigbor.isVisited){
+                    queue.add(neigbor);
+                    neigbor.isVisited = true;
+                }
+            }
+        }
+    }
+    public void BFS() {
+        for (GraphNode2 node : nodelist) {
+            if (!node.isVisited) {
+                bfsVisit(node);
+            }
+        }
+    }
 }
 
 public class adjacency_list {
@@ -58,6 +82,7 @@ public class adjacency_list {
         mygraph.addUndirectedEdge(0,2);
         mygraph.addUndirectedEdge(2,1);
         mygraph.addUndirectedEdge(3,0);
-        System.out.println(mygraph.toString());
+
+        mygraph.BFS();
     }
 }
