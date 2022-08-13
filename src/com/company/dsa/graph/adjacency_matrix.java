@@ -1,10 +1,12 @@
 package com.company.dsa.graph;
 
+import java.awt.desktop.AboutHandler;
 import java.util.ArrayList;
 
 class GraphNode{
     public String name;
     public int index;
+    public boolean isVisited = false;
     public GraphNode(String name, int index){
         this.name = name;
         this.index = index;
@@ -12,7 +14,7 @@ class GraphNode{
 }
 class Graph{
     ArrayList<GraphNode> nodelist = new ArrayList<GraphNode>();
-    int[][] adjacencyMatrix;
+    public int[][] adjacencyMatrix;
 
     public Graph(ArrayList<GraphNode> nodelist){
         this.nodelist = nodelist;
@@ -23,7 +25,6 @@ class Graph{
         adjacencyMatrix[i][j] = 1;
         adjacencyMatrix[j][i] = 1;
     }
-
     public String toString(){
         StringBuilder s = new StringBuilder();
         s.append("   ");
@@ -39,6 +40,18 @@ class Graph{
             s.append("\n");
         }
         return s.toString();
+    }
+    //FOR TRAVERSAL
+    //get neighbors
+    public ArrayList<GraphNode> getNeighbors(GraphNode node){
+        ArrayList<GraphNode> neighbors = new ArrayList<>();
+        int nodeIndex = node.index;
+        for(int i=0;i<adjacencyMatrix.length;i++){
+            if(adjacencyMatrix[nodeIndex][i] == 1){
+                neighbors.add(nodelist.get(i));
+            }
+        }
+        return neighbors;
     }
 }
 public class adjacency_matrix {
