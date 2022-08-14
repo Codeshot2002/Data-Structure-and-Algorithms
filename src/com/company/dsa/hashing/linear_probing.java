@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 class linearProbing{
     String[] hashtable;
-    int usedCellNumber;
+    int lastusedindex;
+
     linearProbing(int size){
         hashtable = new String[size];
-        usedCellNumber = 0;
+        lastusedindex = 0;
     }
 
     public int modASCII(String word, int M){
-        char[] ch;
+        char ch[];
         ch = word.toCharArray();
         int sum = 0;
         for(int i=0;i<word.length();i++){
@@ -20,18 +21,16 @@ class linearProbing{
         return sum%M;
     }
 
-    public double getLoadFactor(){
-        double loadfactor =  usedCellNumber * 1.0/hashtable.length;
+    public double getloadfactor(){
+        double loadfactor = lastusedindex * 1.0/hashtable.length;
         return loadfactor;
     }
 
     public void rehashKeys(String word){
-        usedCellNumber = 0;
-        ArrayList<String> data = new ArrayList<>();
+        lastusedindex = 0;
+        ArrayList<String> data = new ArrayList<String>();
         for(String s : hashtable){
-            if(s!=null) {
-                data.add(s);
-            }
+            data.add(s);
         }
         data.add(word);
         hashtable = new String[hashtable.length * 2];
@@ -40,24 +39,23 @@ class linearProbing{
         }
     }
     public void insertInHashtable(String word){
-        double loadFactor = getLoadFactor();
-        if(loadFactor >= 0.75){
+        double loadfactor = getloadfactor();
+        if(loadfactor>=0.75){
             rehashKeys(word);
-        }
-        else{
+        }else{
             int index = modASCII(word,hashtable.length);
-            for(int i = index;i<hashtable.length;i++){
+            for(int i=index;i<index + hashtable.length;i++){
                 int newIndex = i % hashtable.length;
                 if(hashtable[newIndex] == null){
                     hashtable[newIndex] = word;
-                    System.out.println("Successfully inserted " + word + " at location " + newIndex);
+                    System.out.println(word + " is successfully inserted at " + newIndex);
                     break;
                 }else{
-                    System.out.println( newIndex+" Index is already occupied, moving " + word + " to the next location");
+                    System.out.println(newIndex + " is already occupied, try new empty cell");
                 }
             }
         }
-        usedCellNumber ++;
+        lastusedindex++;
     }
     public void DisplayHashTable(){
         if(hashtable == null){
@@ -70,17 +68,41 @@ class linearProbing{
             }
         }
     }
+
+    public boolean search(String word){
+        int index = modASCII(word,hashtable.length);
+        for(int i = index;i<index + hashtable.length;i++){
+            int newIndex = i% hashtable.length;
+            if(hashtable[newIndex] != null && hashtable[newIndex].equalsIgnoreCase(word)){
+                System.out.println(word + " found at location " + newIndex);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void delete(String word){
+        int index = modASCII(word,hashtable.length);
+        for(int i = index;i<index + hashtable.length;i++){
+            int newIndex = i% hashtable.length;
+            if(hashtable[newIndex] != null && hashtable[newIndex].equalsIgnoreCase(word)){
+                hashtable[newIndex] = null;
+                System.out.println(word + " has been deleted");
+                return;
+            }
+        }
+        System.out.println(word + " does not exist in the table");
+    }
 }
 public class linear_probing {
     public static void main(String[] args) {
-        linearProbing obj = new linearProbing(12);
-        obj.insertInHashtable("Umang");
-        obj.insertInHashtable("Maneesh");
-        obj.insertInHashtable("Vansh");
-        obj.insertInHashtable("Abhi");
-        obj.insertInHashtable("Ujjwal");
-        obj.DisplayHashTable();
-
-        System.out.println("");
+        linearProbing linearProbing = new linearProbing(6);
+        linearProbing.insertInHashtable("Umang");
+        linearProbing.insertInHashtable("ipsit");
+        linearProbing.insertInHashtable("manoj");
+        linearProbing.insertInHashtable("rashmi");
+        linearProbing.insertInHashtable("sonia");
+        linearProbing.DisplayHashTable();
+        linearProbing.search("sonia");
     }
 }
