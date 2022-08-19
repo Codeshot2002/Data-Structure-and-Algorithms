@@ -65,16 +65,20 @@ public class test {
             while(resultSet.next()){
                 //System.out.println(resultSet.getInt(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3)
                 //+ " " + resultSet.getInt(4));
-                database_file data = new database_file(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3),resultSet.getInt(4));
+                database_file data = new database_file(resultSet.getInt(1)
+                        ,resultSet.getString(2)
+                        ,resultSet.getString(3)
+                        ,resultSet.getInt(4));
                 myfile.add(data);
-            }
-            for(database_file a : myfile){
-                System.out.println(a);
-                System.out.println("----------");
             }
         }
         catch(Exception e){
             System.out.println(e);
         }
+        for(database_file a : myfile){
+            System.out.println(a);
+            System.out.println("----------");
+        }
     }
+
 }
