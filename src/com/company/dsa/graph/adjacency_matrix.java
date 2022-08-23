@@ -4,6 +4,7 @@ import java.awt.desktop.AboutHandler;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 class GraphNode{
     public String name;
@@ -55,6 +56,7 @@ class Graph{
         }
         return neighbors;
     }
+    //----------BFS Traversal----------
     public void bfsVisit(GraphNode node){
         LinkedList<GraphNode> queue = new LinkedList<>();
         queue.add(node);
@@ -71,12 +73,42 @@ class Graph{
             }
         }
     }
-
     public void bfs(){
         for(GraphNode node:nodelist){
             if(!node.isVisited){
                 bfsVisit(node);
             }
+        }
+        for(GraphNode node : nodelist){
+            node.isVisited = false;
+        }
+    }
+
+    //----------DFS Traversal----------
+    public void dfsVisit(GraphNode node){
+        Stack<GraphNode> stack = new Stack<>();
+        stack.push(node);
+        while(!stack.isEmpty()){
+            GraphNode current = stack.pop();
+            current.isVisited = true;
+            System.out.print(current.name + " ");
+            ArrayList<GraphNode> neighbors = getNeighbors(node);
+            for(GraphNode neigbor : neighbors){
+                if(!neigbor.isVisited){
+                    stack.add(neigbor);
+                    neigbor.isVisited = true;
+                }
+            }
+        }
+    }
+    public void DFS(){
+        for(GraphNode node:nodelist){
+            if(!node.isVisited){
+                dfsVisit(node);
+            }
+        }
+        for(GraphNode node : nodelist){
+            node.isVisited = false;
         }
     }
 }
@@ -97,6 +129,6 @@ public class adjacency_matrix {
         adjacencyGraph.addUndirectedEdge(2, 1);
         adjacencyGraph.addUndirectedEdge(3, 0);
 
-        adjacencyGraph.bfs();
+        adjacencyGraph.DFS();
     }
 }

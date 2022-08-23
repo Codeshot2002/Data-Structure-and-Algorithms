@@ -2,6 +2,8 @@ package com.company.dsa.graph;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 class GraphNode2{
     public String name;
@@ -28,6 +30,11 @@ class Graph2{
         first.neighbor.add(second);
         second.neighbor.add(first);
     }
+    public void addDirectedEdge(int i, int j){
+        GraphNode2 first = nodelist.get(i);
+        GraphNode2 second = nodelist.get(j);
+        first.neighbor.add(second);
+    }
 
     public String toString(){
         StringBuilder s = new StringBuilder();
@@ -45,11 +52,12 @@ class Graph2{
         }
         return s.toString();
     }
+    //---------BFS Traversal--------
     public void bfsVisit(GraphNode2 node){
-        LinkedList<GraphNode2> queue = new LinkedList<>();
+        Queue<GraphNode2> queue = new LinkedList<>();
         queue.add(node);
         while(!queue.isEmpty()){
-            GraphNode2 current = queue.remove(0);
+            GraphNode2 current = queue.remove();
             current.isVisited = true;
             System.out.print(current.name + " ");
             for(GraphNode2 neigbor : current.neighbor){
@@ -64,6 +72,58 @@ class Graph2{
         for (GraphNode2 node : nodelist) {
             if (!node.isVisited) {
                 bfsVisit(node);
+            }
+        }
+        for(GraphNode2 node : nodelist){
+            node.isVisited = false;
+        }
+    }
+
+    //---------BFS Traversal--------
+    public void dfsVisit(GraphNode2 node){
+        Stack<GraphNode2> stack = new Stack<>();
+        stack.push(node);
+        while(!stack.isEmpty()){
+            GraphNode2 current = stack.pop();
+            current.isVisited = true;
+            System.out.print(current.name + " ");
+            for(GraphNode2 neigbor : current.neighbor){
+                if(!neigbor.isVisited){
+                    stack.add(neigbor);
+                    neigbor.isVisited = true;
+                }
+            }
+        }
+    }
+    public void DFS(){
+        for(GraphNode2 node:nodelist){
+            if(!node.isVisited){
+                dfsVisit(node);
+            }
+        }
+        for(GraphNode2 node : nodelist){
+            node.isVisited = false;
+        }
+    }
+
+    //---------TOPOLOGICAL SORT---------
+    void topologicalVisit(GraphNode2 node, Stack<GraphNode2> stack){
+        for(GraphNode2 neighbor : node.neighbor){
+            if(!neighbor.isVisited){
+                topologicalVisit(neighbor,stack);
+            }
+            node.isVisited = true;
+            stack.push(node);
+        }
+        while(!stack.isEmpty()){
+            System.out.print(stack.pop().name + " ");
+        }
+    }
+    void topologicalSort(){
+        Stack<GraphNode2> stack = new Stack<>();
+        for(GraphNode2 node:nodelist){
+            if(!node.isVisited){
+                topologicalVisit(node,stack);
             }
         }
     }
@@ -83,6 +143,9 @@ public class adjacency_list {
         mygraph.addUndirectedEdge(2,1);
         mygraph.addUndirectedEdge(3,0);
 
+        System.out.println("DFS");
+        mygraph.DFS();
+        System.out.println();
         mygraph.BFS();
     }
 }
