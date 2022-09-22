@@ -49,6 +49,7 @@ class my_stack{
             System.out.println(array[i]);
         }
     }
+    //lavde manish dekh
 }
 public class stack {
     public static void main(String[] args) {
