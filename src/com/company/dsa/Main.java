@@ -36,11 +36,6 @@ public class Main {
         System.out.println(myarray);
     }
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.decimalToBinary(13));
-        int[] arr = {1,2,3};
-        System.out.println(main.sumofArray(arr));
-        System.out.println(main.proofArray(arr));
-        main.pair(arr);
+
     }
 }
