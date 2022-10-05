@@ -9,24 +9,12 @@ public class quick_sort {
 
     static int partition(int[] arr, int low, int high)
     {
-        // pivot
         int pivot = arr[high];
-
-        // Index of smaller element and
-        // indicates the right position
-        // of pivot found so far
         int i = (low - 1);
-
         for(int j = low; j <= high - 1; j++)
         {
-
-            // If current element is smaller
-            // than the pivot
             if (arr[j] < pivot)
             {
-
-                // Increment index of
-                // smaller element
                 i++;
                 swap(arr, i, j);
             }
@@ -44,8 +32,7 @@ public class quick_sort {
     static void printArray(int a[], int n)
     {
         int i;
-        for (i = 0; i < n; i++)
-            System.out.print(a[i] + " ");
+        for (i = 0; i < n; i++) System.out.print(a[i] + " ");
     }
     public static void main(String[] args) {
         int[] array = {5,2,9,6,1,3,7,8,4};
